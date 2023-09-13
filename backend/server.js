@@ -6,17 +6,18 @@ import router from "./routes/index.js";
 import DbConnection from "./config/dbConfig.js";
 import routes from "./routes/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
-/* CONFIGURATION */
-dotenv.config();
 
+dotenv.config();
 const app = express();
+
+/* CONFIGURATION */
 app.use(cookieParser());
 const corsOptions = {
 	credentials: true,
 	origin: "http://localhost:3000",
 };
 app.use(cors(corsOptions));
-app.use('/profile_image',express.static('profile_image'));
+app.use("/profile_image", express.static("profile_image"));
 app.use(express.json({ limit: "8mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(router);
@@ -25,7 +26,7 @@ app.use(router);
 app.use("/api", routes);
 
 /* MONGOOSE CONNECTION */
-DbConnection(); 
+DbConnection();
 
 /* Custome Middleware */
 app.use(errorHandler);
