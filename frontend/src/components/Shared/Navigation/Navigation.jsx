@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 const Navigation = () => {
 	return (
-		<nav className="flex items-center justify-between  lg:w-[1200px] max-w-90 mx-auto">
+		<nav className="flex items-center justify-center lg:justify-start mx-auto  lg:w-[1200px]">
 			<Link
 				to="/"
-				className="items-center hidden text-lg font-bold text-white no-underline lg:flex"
+				className="items-center font-bold text-white no-underline ext-lg lg:flex"
 			>
-				<img src="/images/Logo.png" width="200px" />
+				<img src="/images/Logo.png" width="200px" alt="Logo"/>
 			</Link>
-			<div className="flex items-center mx-auto lg:mx-0 ">
+			{/* <div className="flex items-center mx-auto lg:mx-0 ">
 				<h3>Name</h3>
 				<Link to="/">
 					<img
@@ -23,7 +23,7 @@ const Navigation = () => {
 				<button className="p-1 rounded ursor-pointer bg-secondary">
 					<img src="/images/arrow-forward.png" alt="logout" />
 				</button>
-			</div>
+			</div> */}
 		</nav>
 	);
 };
