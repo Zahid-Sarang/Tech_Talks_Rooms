@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../components/Shared/Button/Button";
 import Card from "../../components/Shared/Card/Card";
 
-
 const Home = () => {
 	const navigate = useNavigate();
 
