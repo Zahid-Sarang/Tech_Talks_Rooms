@@ -7,6 +7,9 @@ class CustomeErrorHandler extends Error {
     static phoneRequired(message) {
         return new CustomeErrorHandler(400,message);
     }
+    static messageFailed(message) {
+        return new CustomeErrorHandler(500,message);
+    }
 
 }
 
