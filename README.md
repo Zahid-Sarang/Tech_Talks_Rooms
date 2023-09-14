@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/public/images/Logo.png" alt="TechTalkRooms Logo">
+  <img src="frontend/public/images/Home.png" alt="TechTalkRooms Logo">
 </p>
 
 <h1 align="center">Tech_Talks_Rooms</h1>
