@@ -22,7 +22,7 @@ const StepPhone = ({ onNext }) => {
 			const { data } = await sendOtp({ phone: phoneNumber });
 			console.log(data);
 			dispatch(setOtp({ phone: data.phone, hash: data.hash }));
-			toast.success("OTP Sent!");
+			toast.success(`Your  OTP is : ${data.otp}`);
 			onNext();
 		} catch (error) {
 			console.log(error);
