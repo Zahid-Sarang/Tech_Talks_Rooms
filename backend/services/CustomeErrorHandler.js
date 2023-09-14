@@ -13,6 +13,12 @@ class CustomeErrorHandler extends Error {
 	static databaseError(message) {
 		return new CustomeErrorHandler(500, message);
 	}
+	static isunAuthorized(message) {
+		return new CustomeErrorHandler(401,message)
+	}
+	static notFound(message) {
+		return new CustomeErrorHandler(404,message)
+	}
 }
 
 export default CustomeErrorHandler;

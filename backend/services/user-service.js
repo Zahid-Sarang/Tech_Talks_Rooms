@@ -7,7 +7,7 @@ class UserService {
 			const user = await UserModel.findOne(filter);
 			return user;
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error));
+			return next(CustomeErrorHandler.databaseError(error.message));
 		}
 	}
 	async createUser(data) {
@@ -15,7 +15,7 @@ class UserService {
 			const user = await UserModel.create(data);
 			return user;
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error));
+			return next(CustomeErrorHandler.databaseError(error.message));
 		}
 	}
 }

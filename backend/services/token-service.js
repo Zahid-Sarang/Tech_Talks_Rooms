@@ -27,8 +27,38 @@ class TokenService {
 				userId,
 			});
 		} catch (error) {
-            return next(CustomeErrorHandler.databaseError(error));
-        }
+			return next(CustomeErrorHandler.databaseError(error.message));
+		}
+	}
+
+	// Verify access token
+	async verifyAccessToken(token) {
+		return jwt.verify(token, accessTokenSecret);
+	}
+
+	// Verify refresh token
+	async verifyRefreshToken(refreshToken) {
+		return jwt.verify(refreshToken, refreshTokenSecret);
+	}
+
+	// Find refresh token
+	async findRefreshToken(userId, refreshToken) {
+		return await refreshTokenModel.findOne({
+			userId: userId,
+			token: refreshToken,
+		});
+	}
+
+	// Update refresh token
+	async updateRefreshToken(userId, refreshToken) {
+		return await refreshTokenModel.updateOne(
+			{ userId: userId },
+			{ token: refreshToken }
+		);
+	}
+	// Remove regresh Token
+	async removeToken(refreshToken) {
+		return await refreshTokenModel.deleteOne({ token: refreshToken });
 	}
 }
 

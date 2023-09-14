@@ -54,7 +54,7 @@ const authController = {
 			return next(CustomeErrorHandler.excutionFailed(" OTP Expired !"));
 		}
 
-		// VERIFY THAT OTP
+		// Verify that hashted OTP
 		const data = `${phone}.${otp}.${expires}`;
 		const isValid = otpservice.verifyOtp(hashedOtp, data);
 		if (!isValid) {
@@ -70,7 +70,7 @@ const authController = {
 			}
 		} catch (error) {
 			console.log(error);
-			return next(CustomeErrorHandler.databaseError(error));
+			return next(CustomeErrorHandler.databaseError(error.message));
 		}
 
 		// generate access token
@@ -93,6 +93,64 @@ const authController = {
 		});
 		const userDto = new UserDto(user);
 
+		res.json({ user: userDto, auth: true });
+	},
+
+	/* GENERATE NEW REFRESH TOKEN */
+	async refreshToken(req, res, next) {
+		const { refreshToken: refreshTokenFromCookie } = req.cookies;
+
+		// Check if token valid
+		let userData;
+		try {
+			userData = await tokenService.verifyRefreshToken(refreshTokenFromCookie);
+		} catch (error) {
+			return next(CustomeErrorHandler.isunAuthorized("Inavalid Token"));
+		}
+
+		// Check token exists in database
+		try {
+			const token = await tokenService.findRefreshToken(
+				userData._id,
+				refreshTokenFromCookie
+			);
+			if (!token) {
+				return next(CustomeErrorHandler.isunAuthorized("Inavalid Token"));
+			}
+		} catch (error) {
+			return next(CustomeErrorHandler.databaseError(error.message));
+		}
+
+		//  Check if user is valid
+		const user = await userService.findUser({ _id: userData._id });
+		if (!user) {
+			return next(CustomeErrorHandler.notFound("User Not Found"));
+		}
+
+		// Generate new Tokens
+		const { refreshToken, accessToken } = tokenService.generateTokens({
+			_id: userData._id,
+		});
+
+		// Update refresh token
+		try {
+			await tokenService.updateRefreshToken(userData._id, refreshToken);
+		} catch (error) {
+			return next(CustomeErrorHandler.databaseError(error.message));
+		}
+
+		// put in cookies
+		res.cookie("refreshToken", refreshToken, {
+			maxAge: 1000 * 60 * 60 * 24 * 30,
+			httpOnly: true,
+		});
+
+		res.cookie("accessToken", accessToken, {
+			maxAge: 1000 * 60 * 60 * 24 * 30,
+			httpOnly: true,
+		});
+		// response
+		const userDto = new UserDto(user);
 		res.json({ user: userDto, auth: true });
 	},
 };
