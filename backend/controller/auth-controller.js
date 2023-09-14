@@ -1,7 +1,9 @@
 import CustomeErrorHandler from "../services/CustomeErrorHandler.js";
 import hashService from "../services/hash-service.js";
 import otpservice from "../services/otp-service.js";
+import tokenService from "../services/token-service.js";
 import userService from "../services/user-service.js";
+import UserDto from "../dtos/user-dtos.js";
 
 const authController = {
 	/* SEND OTP */
@@ -23,7 +25,7 @@ const authController = {
 
 		// send OTP
 		try {
-			await otpservice.sendBysms(phone, otp);
+			// await otpservice.sendBysms(phone, otp);
 			res.json({
 				message: "sucessfully sent",
 				hash: `${hash}.${expires}`,
@@ -70,9 +72,28 @@ const authController = {
 			console.log(error);
 			return next(CustomeErrorHandler.databaseError(error));
 		}
-		res.json({ user, auth: true });
 
-		// TODO: generate access token
+		// generate access token
+		const { accessToken, refreshToken } = tokenService.generateTokens({
+			_id: user._id,
+			activated: false,
+		});
+
+		// store the refresh token
+		await tokenService.storeRefreshToken(refreshToken, user._id);
+
+		// pass http only cookies
+		res.cookie("accessToken", accessToken, {
+			maxAge: 1000 * 60 * 60 * 24 * 30,
+			httpOnly: true,
+		});
+		res.cookie("refreshToken", refreshToken, {
+			maxAge: 1000 * 60 * 60 * 24 * 30,
+			httpOnly: true,
+		});
+		const userDto = new UserDto(user);
+
+		res.json({ user: userDto, auth: true });
 	},
 };
 

@@ -2,7 +2,7 @@ POST http://localhost:8000/api/send-otp HTTP/1.1
 Content-Type: application/json
 
 {
-    "phone": "+919619382968"
+    "phone": "12546456"
 }
 
 
@@ -11,7 +11,7 @@ POST http://localhost:8000/api/verify-otp HTTP/1.1
 Content-Type: application/json
 
 {
-    "phone": "+919619382968",
-    "otp": 3364,
-    "hash": "7edc3d5d4672a954335cac045ddc2a795ba5a0b5060a34132f6a5daca5d1344a.1694625617363"
+    "phone": "12546456",
+    "otp": 5904,
+    "hash": "c6522eb51f3e2ef51f3910a722e02d936c75f5396d64cc3d56e1f6c81d857d.1694661859165"
 }

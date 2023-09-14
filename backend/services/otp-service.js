@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import crypto from "crypto";
 
-import HashService from "./hash-service.js";
+import hashService from "./hash-service.js";
 
 import twilioLib from "twilio";
 dotenv.config();
@@ -32,8 +32,8 @@ class Otpservice {
 	}
 
 	/* VERIFY OTP */
-	async verifyOtp(hashedOtp, data) {
-		let computedHash = HashService.hashOtp(data);
+	verifyOtp(hashedOtp, data) {
+		let computedHash = hashService.hashOtp(data);
 		return computedHash === hashedOtp;
 	}
 }
