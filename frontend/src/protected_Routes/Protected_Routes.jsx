@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import {useSelector } from "react-redux";
 
-const isAuth = false;
-const user = {
-    activated: false,
-};
+// const isAuth = false;
+// const user = {
+//     activated: false,
+// };
 
 // Guest routes
 export function GuestRoute({ component: Component }) {
-	// const { isAuth } = useSelector((state) => state.auth);
+	const { isAuth } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -26,7 +27,7 @@ export function GuestRoute({ component: Component }) {
 
 // SemiProtected Routes
 export function SemiProtectedRoute({ component: Component }) {
-	// const { user, isAuth } = useSelector((state) => state.auth);
+	const { user, isAuth } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -46,7 +47,7 @@ export function SemiProtectedRoute({ component: Component }) {
 
 // Protected Route
  export function ProtectedRoute({ component: Component }) {
-	// const { user, isAuth } = useSelector((state) => state.auth);
+	const { user, isAuth } = useSelector((state) => state.auth);
 	const navigate = useNavigate();
 
 	useEffect(() => {
