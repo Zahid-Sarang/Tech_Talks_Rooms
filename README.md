@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/public/images/logo.png" alt="TechTalkRooms Logo" width="100" height="100">
+  <img src="frontend/public/images/Logo.png" alt="TechTalkRooms Logo">
 </p>
 
 <h1 align="center">Tech_Talks_Rooms</h1>
@@ -66,4 +66,11 @@ npm install
 cd backend
 npm install
 ```
+## Usage 🚀
+
+### To start the server:
+```nodemon server.js ```
+
+### To start the client:
+```npm start ```
 
