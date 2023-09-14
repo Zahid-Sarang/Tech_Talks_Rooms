@@ -1,7 +1,7 @@
 import express from "express";
-import authController from "../controller/auth-controller.js"
-
-
+import authController from "../controller/auth-controller.js";
+import activateController from "../controller/activate-controller.js";
+import  authMiddleware  from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
@@ -15,8 +15,8 @@ const router = express.Router();
 |
 */
 
-router.post("/send-otp",authController.sendOtp);
-router.post("/verify-otp",authController.verifyOtp);
-router.get("/refresh-Token",authController.refreshToken);
-
+router.post("/send-otp", authController.sendOtp);
+router.post("/verify-otp", authController.verifyOtp);
+router.get("/refresh-Token", authController.refreshToken);
+router.post("/api/activate", authMiddleware, activateController.activate);
 export default router;
