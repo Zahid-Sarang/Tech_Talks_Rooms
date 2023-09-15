@@ -153,6 +153,19 @@ const authController = {
 		const userDto = new UserDto(user);
 		res.json({ user: userDto, auth: true });
 	},
+
+	/* LOGOUT USER */
+	async logout(req,res,next){
+		const {refreshToken} = req.cookies;
+
+		// delete from database
+		await tokenService.removeToken(refreshToken);
+
+		// delete cookie
+		res.clearCookie("refreshToken");
+		res.clearCookie("accessToken")
+		res.json({user:null,auth:false})
+	}
 };
 
 export default authController;

@@ -19,4 +19,5 @@ router.post("/send-otp", authController.sendOtp);
 router.post("/verify-otp", authController.verifyOtp);
 router.get("/refresh-Token", authController.refreshToken);
 router.post("/api/activate", authMiddleware, activateController.activate);
+router.post ("/logout", authMiddleware, authController.logout);
 export default router;

@@ -4,7 +4,6 @@ import tokenService from "../services/token-service.js";
 const authMiddleware = async function (req, res, next) {
 	try {
 		const { accessToken } = req.cookies;
-		console.log(accessToken);
 		if (!accessToken) {
 			return next(CustomeErrorHandler.isunAuthorized("Access token required"));
 		}
