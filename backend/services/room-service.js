@@ -4,17 +4,17 @@ import CustomeErrorHandler from "./CustomeErrorHandler.js";
 
 class RoomService {
 	async createRoom(payload) {
-		const { topic, roomtype, ownerId } = payload;
+		const { topic, roomType, ownerId } = payload;
 		try {
 			const room = await RoomModel.create({
 				topic,
-				roomtype,
+				roomType,
 				ownerId,
 				speakers: [ownerId],
 			});
 			return room;
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error.message));
+			throw error;
 		}
 	}
 	async getAllRooms(types) {
@@ -25,7 +25,7 @@ class RoomService {
 				.exec();
 			return rooms;
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error.message));
+			console.error(error.message);
 		}
 	}
 
@@ -34,7 +34,7 @@ class RoomService {
 			const room = await RoomModel.findOne({ _id: roomId });
 			return room;
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error.message));
+			console.error(error.message);
 		}
 	}
 }

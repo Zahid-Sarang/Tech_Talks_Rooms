@@ -1,5 +1,6 @@
-import roomServervice from "../services/room-servervice.js";
+import roomService from "../services/room-service.js";
 import CustomeErrorHandler from "../services/CustomeErrorHandler.js";
+import RoomDto from "../dtos/room-dto.js"
 const roomsController = {
 	async createRoom(req, res, next) {
 		const { topic, roomType } = req.body;
@@ -10,7 +11,7 @@ const roomsController = {
 			);
 		}
 
-		const room = await roomServervice.createRoom({
+		const room = await roomService.createRoom({
 			topic,
 			roomType,
 			ownerId: req.user._id,
@@ -18,9 +19,9 @@ const roomsController = {
 		return res.json(new RoomDto(room));
 	},
 	async allRooms(req, res, next) {
-		const rooms = await roomServervice.getAllRooms(["open"]);
-		const allRooms = await rooms.map((room) => new RoomDto(room));
-        return res,json(allRooms);
+		const rooms = await roomService.getAllRooms(["open"]);
+		const allRooms = rooms.map((room) => new RoomDto(room));
+        return res.json(allRooms);
 	},
     async show(req, res) {
 		const room = await roomService.getRoom(req.params.roomId);
