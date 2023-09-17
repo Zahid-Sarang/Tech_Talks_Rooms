@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 // Components import
 import Navigation from "./components/Shared/Navigation/Navigation";
 import Home from "./pages/Home/Home";
-import Rooms from "./pages/Rooms/Rooms";
+import RoomsLayout from "./pages/RoomsLayout/RoomsLayout";
 import Authentication from "./pages/Authentication/Authentication";
 import Activate from "./pages/Activate/Activate";
 import Loader from "./components/Shared/Loader/Loader";
@@ -18,6 +18,7 @@ import {
 	SemiProtectedRoute,
 	ProtectedRoute,
 } from "./protected_Routes/Protected_Routes";
+import CreateRoom from "./pages/CreateRoom/CreateRoom";
 
 function App() {
 	// call refresh endpoint
@@ -40,7 +41,15 @@ function App() {
 					path="/activate"
 					element={<SemiProtectedRoute component={Activate} />}
 				/>
-				<Route path="/rooms" element={<ProtectedRoute component={Rooms} />} />
+				<Route
+					path="/rooms"
+					element={<ProtectedRoute component={RoomsLayout} />}
+				/>
+
+				<Route
+					path="/create-room"
+					element={<ProtectedRoute component={CreateRoom} />}
+				/>
 			</Routes>
 		</BrowserRouter>
 	);
