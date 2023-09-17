@@ -1,83 +1,98 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Rooms from "../RoomsLayout/RoomsLayout";
 
 import RoomCard from "../../components/RoomCard/RoomCard";
 
-const rooms = [
-	{
-		id: 1,
-		topic: "Which framework best for frontend ?",
-		speakers: [
-			{
-				id: 1,
-				name: "John Doe",
-				avatar: "/images/avatar.png",
-			},
-			{
-				id: 2,
-				name: "Jane Doe",
-				avatar: "/images/Home.png",
-			},
-		],
-		totalPeople: 40,
-	},
-	{
-		id: 3,
-		topic: "What’s new in machine learning?",
-		speakers: [
-			{
-				id: 1,
-				name: "John Doe",
-				avatar: "/images/Home.png",
-			},
-			{
-				id: 2,
-				name: "Jane Doe",
-				avatar: "/images/Home.png",
-			},
-		],
-		totalPeople: 40,
-	},
-	{
-		id: 4,
-		topic: "Why people use stack overflow?",
-		speakers: [
-			{
-				id: 1,
-				name: "John Doe",
-				avatar: "/images/Home.png",
-			},
-			{
-				id: 2,
-				name: "Jane Doe",
-				avatar: "/images/Home.png",
-			},
-		],
-		totalPeople: 40,
-	},
-	{
-		id: 5,
-		topic: "Artificial inteligence is the future?",
-		speakers: [
-			{
-				id: 1,
-				name: "zahid",
-				avatar: "/images/Home.png",
-			},
-			{
-				id: 2,
-				name: "Jane Doe",
-				avatar: "/images/Home.png",
-			},
-		],
-		totalPeople: 40,
-	},
-];
+import { getAllRooms } from "../../api";
+// const rooms = [
+// 	{
+// 		id: 1,
+// 		topic: "Which framework best for frontend ?",
+// 		speakers: [
+// 			{
+// 				id: 1,
+// 				name: "John Doe",
+// 				avatar: "/images/avatar.png",
+// 			},
+// 			{
+// 				id: 2,
+// 				name: "Jane Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 		],
+// 		totalPeople: 40,
+// 	},
+// 	{
+// 		id: 3,
+// 		topic: "What’s new in machine learning?",
+// 		speakers: [
+// 			{
+// 				id: 1,
+// 				name: "John Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 			{
+// 				id: 2,
+// 				name: "Jane Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 		],
+// 		totalPeople: 40,
+// 	},
+// 	{
+// 		id: 4,
+// 		topic: "Why people use stack overflow?",
+// 		speakers: [
+// 			{
+// 				id: 1,
+// 				name: "John Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 			{
+// 				id: 2,
+// 				name: "Jane Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 		],
+// 		totalPeople: 40,
+// 	},
+// 	{
+// 		id: 5,
+// 		topic: "Artificial inteligence is the future?",
+// 		speakers: [
+// 			{
+// 				id: 1,
+// 				name: "zahid",
+// 				avatar: "/images/Home.png",
+// 			},
+// 			{
+// 				id: 2,
+// 				name: "Jane Doe",
+// 				avatar: "/images/Home.png",
+// 			},
+// 		],
+// 		totalPeople: 40,
+// 	},
+// ];
 
 const AllRooms = () => {
-	// const [rooms, setRooms] = useState([]);
+	const [rooms, setRooms] = useState([]);
 	const navigate = useNavigate();
+
+    // Get All Rooms
+	useEffect(() => {
+		const fetchRooms = async () => {
+			try {
+				const { data } = await getAllRooms();
+				setRooms(data);
+			} catch (error) {
+				console.log(error.message);
+			}
+		};
+		fetchRooms();
+	}, []);
+
 	return (
 		<div>
 			<main className="2xl:ml-[--w-side] xl:ml-[--w-side-md] md:ml-[--w-side-small] w-full">

@@ -1,12 +1,28 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RoomsLaout from "../RoomsLayout/RoomsLayout";
-
 import TextInput from "../../components/Shared/TextInputs/TextInput";
+import { create } from "../../api";
+import { toast } from "react-toastify";
+
 const CreateRoom = () => {
-	const [roomType, setRoomType] = useState("open");
+	const [roomType, setroomType] = useState("open");
 	const [topic, setTopic] = useState("");
 	const navigate = useNavigate();
+
+	async function createRooms() {
+		console.log(topic, roomType);
+		try {
+			if (!topic) return toast.error("Please provide a topic!");
+			const { data } = await create({ topic, roomType });
+			console.log(data);
+			toast.success("Room created successfully!");
+			navigate("/rooms");
+		} catch (error) {
+			toast.error(error.message);
+		}
+	}
+
 	return (
 		<div>
 			<RoomsLaout>
@@ -18,13 +34,17 @@ const CreateRoom = () => {
 									<h3 className="m-3 text-xl font-bold text-secondary">
 										Enter the Topic to be disscussed
 									</h3>
-									<TextInput fullwidth="true" />
+									<TextInput
+										fullwidth="true"
+										value={topic}
+										onChange={(e) => setTopic(e.target.value)}
+									/>
 									<h2 className="text-lg m-2.5 font-bold text-secondary">
 										Room types
 									</h2>
 									<div className="grid grid-cols-3 gap-7.5">
 										<div
-											onClick={() => setRoomType("open")}
+											onClick={() => setroomType("open")}
 											className={`flex flex-col items-center p-2.5 rounded-lg cursor-pointer ${
 												roomType === "open" ? "bg-background-color" : ""
 											}`}
@@ -33,7 +53,7 @@ const CreateRoom = () => {
 											<span className="text-secondary">Open</span>
 										</div>
 										<div
-											onClick={() => setRoomType("social")}
+											onClick={() => setroomType("social")}
 											className={`flex flex-col items-center p-2.5 rounded-lg cursor-pointer ${
 												roomType === "social" ? "bg-background-color" : ""
 											}`}
@@ -42,7 +62,7 @@ const CreateRoom = () => {
 											<span className="text-secondary">Social</span>
 										</div>
 										<div
-											onClick={() => setRoomType("close")}
+											onClick={() => setroomType("close")}
 											className={`flex flex-col items-center p-2.5 rounded-lg cursor-pointer ${
 												roomType === "close" ? "bg-background-color" : ""
 											}`}
@@ -56,7 +76,10 @@ const CreateRoom = () => {
 									<h2 className="my-5 text-lg font-bold text-secondary">
 										Start a room, Open to EveryOne
 									</h2>
-									<button className="bg-Active-text text-white flex items-center w-50 justify-center py-1.5 px-2.5 rounded-xl mx-auto transition-transform transform hover:bg-green-700">
+									<button
+										onClick={createRooms}
+										className="bg-Active-text text-white flex items-center w-50 justify-center py-1.5 px-2.5 rounded-xl mx-auto transition-transform transform hover:bg-green-700"
+									>
 										<img src="/images/celebration.png" alt="celebration" />
 										<span className="ml-1.5 font-bold">Let's go</span>
 									</button>

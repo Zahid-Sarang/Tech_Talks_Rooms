@@ -27,7 +27,7 @@ class TokenService {
 				userId,
 			});
 		} catch (error) {
-			return next(CustomeErrorHandler.databaseError(error.message));
+			console.error(error.message)
 		}
 	}
 

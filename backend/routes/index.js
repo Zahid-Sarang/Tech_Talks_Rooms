@@ -1,8 +1,8 @@
 import express from "express";
 import authController from "../controller/auth-controller.js";
 import activateController from "../controller/activate-controller.js";
-import  authMiddleware  from "../middlewares/authMiddleware.js";
-
+import roomsController from "../controller/rooms-controller.js";
+import authMiddleware from "../middlewares/authMiddleware.js";
 const router = express.Router();
 
 /*
@@ -19,5 +19,8 @@ router.post("/send-otp", authController.sendOtp);
 router.post("/verify-otp", authController.verifyOtp);
 router.get("/refresh-Token", authController.refreshToken);
 router.post("/api/activate", authMiddleware, activateController.activate);
-router.post ("/logout", authMiddleware, authController.logout);
+router.post("/logout", authMiddleware, authController.logout);
+router.post("/createroom", authMiddleware, roomsController.createRoom);
+router.get("/allrooms", authMiddleware, roomsController.allRooms);
+router.get("/rooms/:roomId", authMiddleware, roomsController.show);
 export default router;
