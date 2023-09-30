@@ -12,6 +12,7 @@ import RoomsLayout from "./pages/RoomsLayout/RoomsLayout";
 import Authentication from "./pages/Authentication/Authentication";
 import Activate from "./pages/Activate/Activate";
 import Loader from "./components/Shared/Loader/Loader";
+import Room from "./pages/Room/Room";
 // protected routes
 import {
 	GuestRoute,
@@ -50,6 +51,7 @@ function App() {
 					path="/create-room"
 					element={<ProtectedRoute component={CreateRoom} />}
 				/>
+				<Route path="/room/:id" element={<ProtectedRoute component={Room} />} />
 			</Routes>
 		</BrowserRouter>
 	);
