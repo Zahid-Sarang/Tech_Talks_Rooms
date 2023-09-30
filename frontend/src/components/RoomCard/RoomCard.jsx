@@ -1,23 +1,19 @@
 import React from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import VoiceChatIcon from "@mui/icons-material/VoiceChat";
 import PersonIcon from "@mui/icons-material/Person";
 
 const RoomCard = ({ room }) => {
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	return (
-		<div
-			onClick={() => {
-				navigate(`/room/${room.id}`);
-			}}
-			className="p-5 rounded-lg cursor-pointer bg-card-color"
-		>
+		<div className="p-5 rounded-lg cursor-pointer bg-card-color">
 			<div className="flex items-center justify-between gap-2">
-			<h3 className="text-secondary">{room.topic}</h3>
-			<Link to={`/room/${room.id}`} className="font-bold text-Active-text">Join</Link>
-				
+				<h3 className="text-secondary">{room.topic}</h3>
+				<Link to={`/room/${room.id}`} className="font-bold text-Active-text">
+					Join
+				</Link>
 			</div>
 			<div
 				className={`flex items-center relative my-5 ${

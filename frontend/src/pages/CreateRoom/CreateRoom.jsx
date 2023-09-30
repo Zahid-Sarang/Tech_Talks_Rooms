@@ -17,7 +17,7 @@ const CreateRoom = () => {
 			const { data } = await create({ topic, roomType });
 			console.log(data);
 			toast.success("Room created successfully!");
-			navigate("/rooms");
+			navigate(`/room/${data.id}`);
 		} catch (error) {
 			toast.error(error.message);
 		}
