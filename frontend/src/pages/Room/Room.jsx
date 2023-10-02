@@ -1,7 +1,23 @@
 import React from "react";
+import { useState } from "react";
+import { useWebRTC } from "../../hooks/useWebRTC";
 
 const Room = () => {
-	return <div>Hello There my name is zahid </div>;
+	const { clients } = useWebRTC();
+
+	return (
+		<div>
+			<h1>All connected clients</h1>
+			{clients.map((client) => {
+				return (
+					<div key={client.id}>
+						<audio controls autoPlay></audio>
+						<h4>{client.name}</h4>
+					</div>
+				);
+			})}
+		</div>
+	);
 };
 
 export default Room;
