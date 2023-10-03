@@ -1,9 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useStat } from "react";
+import { useParams } from "react-router-dom";
 import { useWebRTC } from "../../hooks/useWebRTC";
-
+import { useSelector } from "react-redux";
 const Room = () => {
-	const { clients } = useWebRTC();
+	const { id: roomId } = useParams();
+	const user = useSelector((state) => state.auth.user);
+	const { clients, provideRef } = useWebRTC(roomId, user);
 
 	return (
 		<div>
@@ -11,7 +14,11 @@ const Room = () => {
 			{clients.map((client) => {
 				return (
 					<div key={client.id}>
-						<audio controls autoPlay></audio>
+						<audio
+							ref={(instance) => provideRef(instance, client.id)}
+							controls
+							autoPlay
+						></audio>
 						<h4>{client.name}</h4>
 					</div>
 				);
