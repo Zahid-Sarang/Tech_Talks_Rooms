@@ -6,9 +6,20 @@ import router from "./routes/index.js";
 import DbConnection from "./config/dbConfig.js";
 import routes from "./routes/index.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import { ACTIONS } from "./action.js";
+import http from "http";
+import { Server } from "socket.io";
 
 dotenv.config();
 const app = express();
+const server = http.createServer(app);
+
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:3000",
+		methods: ["GET", "POST"],
+	},
+});
 
 /* CONFIGURATION */
 app.use(cookieParser());
@@ -33,4 +44,23 @@ app.use(errorHandler);
 
 /* SERVER PORT */
 const PORT = process.env.APP_PORT || 5000;
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+
+//socket
+
+const socketUserMapping = {};
+
+io.on("connection", (socket) => {
+	console.log("new connection", socket.id);
+	socket.on(ACTIONS.JOIN, ({ roomId, user }) => {
+	    socketUserMapping[socket.id] = user;
+	    const clients = Array.from(io.sockets.adapter.rooms.get(roomId) || []);
+	    clients.forEach((clientId) => {
+	        io.to(clientId).emit(ACTIONS.ADD_PEER, {});
+	    });
+	    socket.emit(ACTIONS.ADD_PEER, {});
+	    socket.join(roomId);
+	    console.log(clients);
+	});
+});
+
+server.listen(PORT, () => console.log(`Listening on port ${PORT}`));
